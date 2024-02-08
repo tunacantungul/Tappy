@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://h71yqrxab00u"]
+
+[ext_resource type="Texture2D" uid="uid://cxopyyt2q1n8b" path="res://assets/background/rocks_2.png" id="1_1md35"]
+[ext_resource type="Script" path="res://scenes/game/game.gd" id="1_a24gi"]
+[ext_resource type="PackedScene" uid="uid://ch77mbdsa0gxy" path="res://scenes/plane/plane.tscn" id="2_ge7m0"]
+[ext_resource type="PackedScene" uid="uid://l6kvhknd315s" path="res://scenes/floor barrier/floor_barrier.tscn" id="3_gl62c"]
+[ext_resource type="PackedScene" uid="uid://csb3xvnvpmxhk" path="res://scenes/pipes scene/pipes_scene.tscn" id="4_j5cur"]
+[ext_resource type="PackedScene" uid="uid://ce6wh227h02ix" path="res://scenes/hud/hud.tscn" id="6_j301i"]
+[ext_resource type="PackedScene" uid="uid://dlo408el6udps" path="res://scenes/game over/game_over.tscn" id="7_8ekih"]
+[ext_resource type="PackedScene" uid="uid://iu1mch75bdbu" path="res://scenes/ScrollingBG/scrolling_background.tscn" id="8_xvikl"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_a24gi")
+pipes_scene = ExtResource("4_j5cur")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(50, 314)
+texture = ExtResource("1_1md35")
+
+[node name="Plane" parent="." instance=ExtResource("2_ge7m0")]
+position = Vector2(56, 398)
+
+[node name="CeilingBarrier" parent="." instance=ExtResource("3_gl62c")]
+position = Vector2(0, -22)
+
+[node name="FloorBarrier" parent="." instance=ExtResource("3_gl62c")]
+position = Vector2(1, 854)
+
+[node name="PipesHolder" type="Node" parent="."]
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="SpawnU" type="Marker2D" parent="."]
+position = Vector2(530, 340)
+
+[node name="SpawnL" type="Marker2D" parent="."]
+position = Vector2(530, 540)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Hud" parent="CanvasLayer" instance=ExtResource("6_j301i")]
+
+[node name="GameOver" parent="CanvasLayer" instance=ExtResource("7_8ekih")]
+
+[node name="ScrollingBackground" parent="." instance=ExtResource("8_xvikl")]
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
